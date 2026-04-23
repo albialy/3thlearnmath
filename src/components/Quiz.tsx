@@ -117,22 +117,38 @@ export function Quiz() {
   useEffect(() => {
     if (isEvaluating || num1 === 0 || sessionCompleted || reviewMode) return;
     
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev <= 1) {
-          clearInterval(timer);
+    // Instead of interval exactly 1000ms, use smaller steps to allow faster ticking
+    const startTime = Date.now();
+    const duration = timeLeft * 1000;
+    
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const remainingSeconds = Math.max(0, Math.ceil((duration - elapsed) / 1000));
+      
+      if (remainingSeconds !== timeLeft) {
+        setTimeLeft(remainingSeconds);
+        
+        if (remainingSeconds <= 0) {
+          clearInterval(interval);
           handleTimeOut();
-          return 0;
-        }
-        if (prev <= 4) {
+        } else if (remainingSeconds <= 5) {
           playSound('tick');
         }
-        return prev - 1;
-      });
-    }, 1000);
+      }
+
+      // If time is 5 or less, maybe we want more frequent ticks?
+      // Since interval is fast, we can tick on every 500ms when <= 5s
+      const remainingMs = duration - elapsed;
+      if (remainingMs > 0 && remainingMs <= 5000) {
+         if (Math.floor(remainingMs / 500) !== Math.floor((remainingMs + 50) / 500)) {
+             try { playSound('tick') } catch(e) {}
+         }
+      }
+      
+    }, 50);
     
-    return () => clearInterval(timer);
-  }, [isEvaluating, num1, qType, sessionCompleted, reviewMode]); // Restart timer when question changes
+    return () => clearInterval(interval);
+  }, [isEvaluating, num1, qType, sessionCompleted, reviewMode, timeLeft]); // Restart timer when question changes
 
   const updateHistory = (correct: boolean) => {
     const key = `${Math.min(num1, num2)}x${Math.max(num1, num2)}`;
@@ -366,9 +382,14 @@ export function Quiz() {
     show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", bounce: 0.6 } }
   };
 
-  // Timer color
-  const timerColor = timeLeft > 5 ? 'text-info-600' : 'text-red-500';
-  const timerBgColor = timeLeft > 5 ? 'bg-info-500' : 'bg-red-500';
+  // Timer color and pulse effect
+  const getTimerClasses = () => {
+    if (timeLeft > 10) return { text: 'text-success-600', bg: 'bg-success-500', from: 'from-success-400', to: 'to-success-500', pulse: false };
+    if (timeLeft > 5) return { text: 'text-warning-600', bg: 'bg-warning-500', from: 'from-warning-400', to: 'to-warning-500', pulse: false };
+    return { text: 'text-red-500', bg: 'bg-red-500', from: 'from-red-400', to: 'to-red-600', pulse: true };
+  };
+  
+  const timerStyle = getTimerClasses();
 
   if (sessionCompleted) {
     if (reviewMode && mistakes.length > 0) {
@@ -489,7 +510,15 @@ export function Quiz() {
            
           <div className="bg-slate-50 flex items-center gap-2 px-4 py-2 rounded-2xl text-slate-700 font-black text-xl border-2 border-slate-200 relative overflow-visible">
             <span className="text-sm text-slate-400 uppercase tracking-wider ml-1">النقاط</span>
-            <span className="min-w-[2.5rem] text-center text-info-600 text-2xl">{score}</span>
+            <motion.span 
+              key={score}
+              initial={{ scale: 1.5, color: '#10b981' }}
+              animate={{ scale: 1, color: '#0ea5e9' }}
+              transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+              className="min-w-[2.5rem] text-center text-info-600 text-2xl"
+            >
+              {score}
+            </motion.span>
             
             {highScore > 0 && (
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-warning-100 text-warning-800 text-xs px-3 py-0.5 rounded-full font-black shadow-sm whitespace-nowrap whitespace-pre">
@@ -501,12 +530,12 @@ export function Quiz() {
       </div>
 
       {/* Visual Timer Progress Bar */}
-      <div className="w-full max-w-lg mx-auto bg-slate-100 h-4 rounded-full mb-8 overflow-hidden border-2 border-slate-200 shadow-inner p-0.5 relative">
+      <div className={`w-full max-w-lg mx-auto bg-slate-100 h-4 rounded-full mb-8 overflow-hidden border-2 shadow-inner p-0.5 relative transition-colors duration-300 ${timeLeft <= 5 && !isEvaluating && !sessionCompleted && !reviewMode ? 'ring-4 ring-red-300 animate-pulse border-red-400 bg-red-50' : 'border-slate-200'}`}>
         <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black tracking-widest text-slate-800/30 font-mono z-10 w-full" dir="ltr">
            {timeLeft}s
         </div>
         <motion.div 
-          className={`h-full rounded-full ${timerBgColor}`}
+          className={`h-full rounded-full bg-gradient-to-r ${timeLeft <= 5 ? 'from-red-600 to-red-400' : timerStyle.from + ' ' + timerStyle.to}`}
           initial={{ width: '100%' }}
           animate={{ width: `${(timeLeft / 15) * 100}%` }}
           transition={{ ease: "linear", duration: 1 }}
@@ -535,9 +564,9 @@ export function Quiz() {
             {qType === 'multiply' ? '× ضرب' : '÷ قسمة'}
           </div>
           
-          <div className="absolute top-4 left-6 flex items-center gap-2 font-black text-xl bg-slate-50 px-3 py-1 rounded-full border-2 border-slate-100 shadow-sm">
-             <Timer size={20} className={timerColor} />
-             <span className={`${timerColor} min-w-[2rem] text-center`} dir="ltr">{timeLeft}</span>
+          <div className={`absolute top-4 left-6 flex items-center gap-2 font-black text-xl bg-slate-50 px-3 py-1 rounded-full border-2 shadow-sm ${timeLeft <= 5 ? 'border-red-400 text-red-600 bg-red-50 animate-pulse' : 'border-slate-100 text-slate-700'}`}>
+             <Timer size={20} className={timeLeft <= 5 ? 'text-red-500' : timerStyle.text} />
+             <span className={`${timeLeft <= 5 ? 'text-red-600' : timerStyle.text} min-w-[2rem] text-center transition-colors`} dir="ltr">{timeLeft}</span>
           </div>
 
           {!isEvaluating && !hintUsed && (

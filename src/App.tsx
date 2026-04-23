@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Lightbulb, Triangle, Home as HomeIcon, Palette, BookOpen } from 'lucide-react';
+import { Play, Lightbulb, Triangle, Home as HomeIcon, Palette, BookOpen, Heart } from 'lucide-react';
 import { Home } from './components/Home';
 import { Quiz } from './components/Quiz';
 import { SmartTricks } from './components/SmartTricks';
@@ -116,35 +116,43 @@ export default function App() {
         </nav>
       </header>
 
-      <main className="flex-1 w-full max-w-5xl mx-auto flex flex-col relative">
+      <main className="flex-1 w-full max-w-5xl mx-auto flex flex-col relative overflow-hidden">
         <AnimatePresence mode="wait">
           {activeTab === 'home' && (
-            <motion.div key="home" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+            <motion.div key="home" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="flex-1 flex flex-col">
               <Home onNavigate={setActiveTab} />
             </motion.div>
           )}
           {activeTab === 'journey' && (
-            <motion.div key="journey" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+            <motion.div key="journey" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="flex-1 flex flex-col">
               <LearningJourney />
             </motion.div>
           )}
           {activeTab === 'quiz' && (
-            <motion.div key="quiz" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+            <motion.div key="quiz" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="flex-1 flex flex-col">
               <Quiz />
             </motion.div>
           )}
           {activeTab === 'tricks' && (
-            <motion.div key="tricks" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+            <motion.div key="tricks" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="flex-1 flex flex-col">
               <SmartTricks />
             </motion.div>
           )}
           {activeTab === 'fact-family' && (
-            <motion.div key="family" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+            <motion.div key="family" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="flex-1 flex flex-col">
               <FactFamily />
             </motion.div>
           )}
         </AnimatePresence>
       </main>
+
+      <footer className="w-full max-w-5xl mx-auto mt-8 flex justify-center">
+        <div className="bg-white/60 backdrop-blur-sm border-2 border-slate-100 px-6 py-3 rounded-full shadow-sm flex items-center justify-center gap-2 text-slate-500 font-medium text-sm transition-all hover:bg-white hover:shadow-md hover:scale-105 cursor-default">
+           صُنع بكل <Heart size={16} className="text-rose-500 fill-rose-500 animate-pulse" /> من قِبل الأستاذ: 
+           <span className="font-black text-slate-700 mx-1">أحمد البيلي</span>
+           لمساندة طلابه الأعزاء
+        </div>
+      </footer>
     </div>
   );
 }

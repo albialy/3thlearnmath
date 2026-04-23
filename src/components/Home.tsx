@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Lightbulb, Triangle } from 'lucide-react';
+import { Play, Lightbulb, Triangle, Star } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export function Home({ onNavigate }: { onNavigate: (tab: any) => void }) {
@@ -101,7 +101,7 @@ export function Home({ onNavigate }: { onNavigate: (tab: any) => void }) {
         </div>
       </motion.button>
 
-      {/* Journey (Bento Box 4) */}
+      {/* Journey (Bento Box 5) */}
       <motion.button 
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -123,6 +123,42 @@ export function Home({ onNavigate }: { onNavigate: (tab: any) => void }) {
            <div className="w-16 h-16 bg-success-100 rounded-2xl flex items-center justify-center text-3xl shadow-sm border-2 border-success-200 rotate-6">🔢</div>
         </div>
       </motion.button>
+
+      {/* Leaderboard (Bento Box 6) */}
+      <div className="col-span-1 md:col-span-12 bg-gradient-to-r from-warning-50 to-warning-100 rounded-3xl p-8 border-4 border-warning-200 shadow-md relative overflow-hidden text-right">
+        <div className="flex items-center gap-4 mb-6 justify-center md:justify-start">
+          <div className="bg-warning-200 p-3 rounded-2xl shadow-inner text-warning-700">
+             <Star size={28} fill="currentColor" />
+          </div>
+          <h4 className="text-3xl font-black text-slate-800">أبطال جدول الضرب</h4>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <LeaderboardCard rank={1} name="بطل الرياضيات" score={parseInt(localStorage.getItem('mathHighScore') || '0', 10) || 150} avatar="👑" />
+          <LeaderboardCard rank={2} name="العبقري الصغير" score={120} avatar="🚀" />
+          <LeaderboardCard rank={3} name="النجم الصاعد" score={95} avatar="⭐" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LeaderboardCard({ rank, name, score, avatar }: { rank: number, name: string, score: number, avatar: string }) {
+  const isFirst = rank === 1;
+  return (
+    <div className={`p-4 rounded-2xl border-2 flex items-center gap-4 transition-transform hover:scale-105 ${isFirst ? 'bg-white border-warning-300 shadow-lg' : 'bg-white/60 border-warning-200 shadow-sm'}`}>
+      <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-inner ${isFirst ? 'bg-warning-100 text-warning-700' : 'bg-slate-100 text-slate-500'}`}>
+        {rank}
+      </div>
+      <div className="text-3xl bg-slate-50 w-12 h-12 rounded-full flex items-center justify-center shadow-inner border border-slate-100">
+        {avatar}
+      </div>
+      <div className="flex-1 text-right">
+        <h5 className="font-bold text-slate-800 truncate">{name}</h5>
+        <div className="text-warning-600 font-black text-lg flex items-center gap-1 justify-end" dir="ltr">
+           <span>{score}</span> <span className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">pts</span>
+        </div>
+      </div>
     </div>
   );
 }
