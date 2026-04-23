@@ -1,0 +1,172 @@
+import React, { useState, useEffect } from 'react';
+import { Play, Lightbulb, Triangle, Home as HomeIcon, Palette, BookOpen } from 'lucide-react';
+import { Home } from './components/Home';
+import { Quiz } from './components/Quiz';
+import { SmartTricks } from './components/SmartTricks';
+import { FactFamily } from './components/FactFamily';
+import { LearningJourney } from './components/LearningJourney';
+import { motion, AnimatePresence } from 'motion/react';
+
+type Tab = 'home' | 'journey' | 'quiz' | 'tricks' | 'fact-family';
+
+const THEME_COLORS: Record<string, { [key: string]: string }> = {
+  orange: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c' },
+  rose: { 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c' },
+  indigo: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' },
+  emerald: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857' },
+  teal: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e' },
+  purple: { 50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe', 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7e22ce' }
+};
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState<Tab>('home');
+  const [accentColor, setAccentColor] = useState<string>(() => localStorage.getItem('accentColor') || 'orange');
+  const [showThemePicker, setShowThemePicker] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('accentColor', accentColor);
+    const theme = THEME_COLORS[accentColor];
+    if (theme) {
+      const root = document.documentElement;
+      Object.keys(theme).forEach(key => {
+        root.style.setProperty(`--color-primary-${key}`, theme[key]);
+      });
+    }
+  }, [accentColor]);
+
+  return (
+    <div className="min-h-screen flex flex-col p-4 md:p-8 font-cairo">
+      <header className="max-w-5xl w-full mx-auto flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+        {/* Main Title Bento Box */}
+        <div className="bg-white px-6 py-4 rounded-3xl shadow-sm border-4 border-primary-100 flex items-center gap-4 w-full md:w-auto relative">
+          <div className="flex-1">
+            <h1 className="text-2xl font-black text-primary-600">مختبر الأرقام العجيب</h1>
+            <p className="text-sm text-slate-500 font-medium">حيث تتحول الرياضيات إلى مغامرة!</p>
+          </div>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => setShowThemePicker(!showThemePicker)}
+              className="w-14 h-14 bg-primary-50 hover:bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xl shrink-0 transition-colors border-2 border-primary-200"
+            >
+              <Palette size={24} />
+            </button>
+            <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center text-3xl shrink-0">
+              🧪
+            </div>
+          </div>
+          
+          <AnimatePresence>
+            {showThemePicker && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                className="absolute top-full left-0 mt-2 bg-white p-3 rounded-2xl shadow-xl flex gap-2 border-2 border-slate-100 z-50"
+              >
+                {Object.keys(THEME_COLORS).map(color => (
+                  <button
+                    key={color}
+                    onClick={() => { setAccentColor(color); setShowThemePicker(false); }}
+                    className={`w-10 h-10 rounded-full border-2 transition-transform ${accentColor === color ? 'scale-110 border-slate-800' : 'border-transparent hover:scale-105'}`}
+                    style={{ backgroundColor: THEME_COLORS[color][500] }}
+                  />
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        
+        {/* Navigation - Styling as mini bento boxes */}
+        <nav className="flex flex-wrap justify-center gap-3">
+          <NavButton 
+            active={activeTab === 'home'} 
+            onClick={() => setActiveTab('home')}
+            icon={<HomeIcon size={18} />}
+            text="الرئيسية"
+            color="gray"
+          />
+          <NavButton 
+            active={activeTab === 'journey'} 
+            onClick={() => setActiveTab('journey')}
+            icon={<BookOpen size={18} />}
+            text="رحلة التعلم"
+            color="secondary"
+          />
+          <NavButton 
+            active={activeTab === 'quiz'} 
+            onClick={() => setActiveTab('quiz')}
+            icon={<Play size={18} />}
+            text="تحدي"
+            color="primary"
+          />
+           <NavButton 
+            active={activeTab === 'fact-family'} 
+            onClick={() => setActiveTab('fact-family')}
+            icon={<Triangle size={18} />}
+            text="مثلث"
+            color="success"
+          />
+          <NavButton 
+            active={activeTab === 'tricks'} 
+            onClick={() => setActiveTab('tricks')}
+            icon={<Lightbulb size={18} />}
+            text="حيل"
+            color="warning"
+          />
+        </nav>
+      </header>
+
+      <main className="flex-1 w-full max-w-5xl mx-auto flex flex-col relative">
+        <AnimatePresence mode="wait">
+          {activeTab === 'home' && (
+            <motion.div key="home" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+              <Home onNavigate={setActiveTab} />
+            </motion.div>
+          )}
+          {activeTab === 'journey' && (
+            <motion.div key="journey" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+              <LearningJourney />
+            </motion.div>
+          )}
+          {activeTab === 'quiz' && (
+            <motion.div key="quiz" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+              <Quiz />
+            </motion.div>
+          )}
+          {activeTab === 'tricks' && (
+            <motion.div key="tricks" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+              <SmartTricks />
+            </motion.div>
+          )}
+          {activeTab === 'fact-family' && (
+            <motion.div key="family" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col">
+              <FactFamily />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+}
+
+function NavButton({ active, onClick, icon, text, color }: { active: boolean, onClick: () => void, icon: React.ReactNode, text: string, color: 'gray'|'primary'|'success'|'warning'|'secondary' }) {
+  
+  const colors = {
+    gray: 'border-slate-200 text-slate-500 hover:bg-slate-50 data-[active=true]:bg-slate-800 data-[active=true]:text-white data-[active=true]:border-slate-800',
+    primary: 'border-primary-200 text-primary-500 hover:bg-primary-50 data-[active=true]:bg-primary-600 data-[active=true]:text-white data-[active=true]:border-primary-600',
+    success: 'border-success-200 text-success-500 hover:bg-success-50 data-[active=true]:bg-success-600 data-[active=true]:text-white data-[active=true]:border-success-600',
+    warning: 'border-warning-200 text-warning-600 hover:bg-warning-50 data-[active=true]:bg-warning-500 data-[active=true]:text-white data-[active=true]:border-warning-500',
+    secondary: 'border-secondary-200 text-secondary-500 hover:bg-secondary-50 data-[active=true]:bg-secondary-600 data-[active=true]:text-white data-[active=true]:border-secondary-600',
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      data-active={active}
+      className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-bold bg-white border-2 shadow-sm transition-all whitespace-nowrap ${colors[color]}`}
+    >
+      {icon}
+      <span>{text}</span>
+    </button>
+  );
+}
