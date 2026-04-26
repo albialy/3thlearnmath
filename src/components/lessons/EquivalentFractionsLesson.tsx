@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Scale, Check, Star, RefreshCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -14,7 +13,6 @@ const CHALLENGES = [
 
 export function EquivalentFractionsLesson() {
   const [level, setLevel] = useState(0);
-  const [quizDone, setQuizDone] = useState(false);
   const [numInput, setNumInput] = useState<string>('');
   const [showResult, setShowResult] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -118,8 +116,6 @@ export function EquivalentFractionsLesson() {
             </AnimatePresence>
             
           </>
-        ) : !quizDone ? (
-          <DynamicQuiz topic="EquivalentFractionsLesson.tsx" onComplete={() => setQuizDone(true)} />
         ) : (
           <div className="flex flex-col items-center justify-center py-12">
             <div className="w-24 h-24 bg-blue-100 text-blue-500 rounded-full flex items-center justify-center mb-6">
@@ -128,7 +124,7 @@ export function EquivalentFractionsLesson() {
             <h3 className="text-3xl font-black text-slate-800 mb-4">ممتاز!</h3>
             <p className="text-slate-600 text-lg mb-8">أنت الآن تعرف كيف تجد الكسور المتكافئة.</p>
             <button 
-              onClick={() => { setLevel(0); setQuizDone(false); setNumInput(''); setShowResult(false); }}
+              onClick={() => { setLevel(0); setNumInput(''); setShowResult(false); }}
               className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-3 rounded-xl flex items-center gap-2"
             >
               <RefreshCw size={20} />

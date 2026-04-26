@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Droplet, Check, AlertCircle, RefreshCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -23,7 +22,6 @@ const ITEMS = [
 
 
 export function CapacityLesson() {
-  const [quizDone, setQuizDone] = useState(false);
   const [items, setItems] = useState(ITEMS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sorted, setSorted] = useState<{ ml: any[], l: any[] }>({ ml: [], l: [] });
@@ -230,12 +228,6 @@ export function CapacityLesson() {
               <RefreshCw size={24} /> تدرب مرة أخرى
            </button>
         </motion.div>
-      )}
-    
-      {!quizDone && (
-         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
-            <DynamicQuiz topic="CapacityLesson.tsx" onComplete={() => setQuizDone(true)} />
-         </div>
       )}
 </div>
   );

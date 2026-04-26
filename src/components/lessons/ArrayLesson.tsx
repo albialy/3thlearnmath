@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 
@@ -9,7 +8,6 @@ const EMOJIS = ['🍎', '⭐', '🚗', '🎈', '🍪', '⚽', '🦋', '🍉'];
 
 
 export function ArrayLesson() {
-  const [quizDone, setQuizDone] = useState(false);
   const [rows, setRows] = useState(3);
   const [cols, setCols] = useState(4);
   const [currentEmoji, setCurrentEmoji] = useState(EMOJIS[0]);
@@ -126,12 +124,6 @@ export function ArrayLesson() {
            </button>
          </motion.div>
        )}
-    
-      {!quizDone && (
-         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
-            <DynamicQuiz topic="ArrayLesson.tsx" onComplete={() => setQuizDone(true)} />
-         </div>
-      )}
 </div>
   );
 }

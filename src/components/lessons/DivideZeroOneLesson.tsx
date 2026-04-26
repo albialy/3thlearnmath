@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 
@@ -7,7 +6,6 @@ import confetti from 'canvas-confetti';
 
 
 export function DivideZeroOneLesson() {
-  const [quizDone, setQuizDone] = useState(false);
   const [activeTab, setActiveTab] = useState<'rule1' | 'rule2' | 'rule3'>('rule1');
   const [quizStarted, setQuizStarted] = useState(false);
   const [qIndex, setQIndex] = useState(0);
@@ -137,12 +135,6 @@ export function DivideZeroOneLesson() {
             </button>
          </motion.div>
        )}
-    
-      {!quizDone && (
-         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
-            <DynamicQuiz topic="DivideZeroOneLesson.tsx" onComplete={() => setQuizDone(true)} />
-         </div>
-      )}
 </div>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Star, RefreshCw, PenTool } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -25,7 +24,6 @@ const CHALLENGES = [
 
 export function FractionsProblemSolvingLesson() {
   const [level, setLevel] = useState(0);
-  const [quizDone, setQuizDone] = useState(false);
   const [numInput, setNumInput] = useState<string>('');
   const [showResult, setShowResult] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -136,8 +134,6 @@ export function FractionsProblemSolvingLesson() {
             </AnimatePresence>
             
           </>
-        ) : !quizDone ? (
-          <DynamicQuiz topic="FractionsProblemSolvingLesson.tsx" onComplete={() => setQuizDone(true)} />
         ) : (
           <div className="flex flex-col items-center justify-center py-12 relative z-10">
             <div className="w-24 h-24 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mb-6">
@@ -146,7 +142,7 @@ export function FractionsProblemSolvingLesson() {
             <h3 className="text-3xl font-black text-slate-800 mb-4">مفكر رائع!</h3>
             <p className="text-slate-600 text-lg mb-8">لقد استخدمت رسم صورة لحل مشاكل الكسور.</p>
             <button 
-              onClick={() => { setLevel(0); setQuizDone(false); setNumInput(''); setShowDrawHint(false); setShowResult(false); }}
+              onClick={() => { setLevel(0); setNumInput(''); setShowDrawHint(false); setShowResult(false); }}
               className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-3 rounded-xl flex items-center gap-2"
             >
               <RefreshCw size={20} />

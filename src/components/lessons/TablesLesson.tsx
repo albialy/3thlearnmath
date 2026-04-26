@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 
@@ -7,7 +6,6 @@ import confetti from 'canvas-confetti';
 
 
 export function TablesLesson() {
-  const [quizDone, setQuizDone] = useState(false);
   const [rule] = useState(4); // Divide by 4
   const [inputs] = useState([32, 28, 24, 20]);
   const [answers, setAnswers] = useState<string[]>(['', '', '', '']);
@@ -98,13 +96,6 @@ export function TablesLesson() {
            </motion.div>
          )}
        </div>
-
-    
-      {!quizDone && (
-         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
-            <DynamicQuiz topic="TablesLesson.tsx" onComplete={() => setQuizDone(true)} />
-         </div>
-      )}
 </div>
   );
 }

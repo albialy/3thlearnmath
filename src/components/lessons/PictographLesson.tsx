@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Smile, CheckCircle2, RotateCcw, HelpCircle, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -17,7 +16,6 @@ const KEY_VALUE = 2; // Each symbol = 2 animals
 
 
 export function PictographLesson() {
-  const [quizDone, setQuizDone] = useState(false);
   const [mode, setMode] = useState<'intro' | 'build' | 'interpret'>('intro');
   
   // Build state
@@ -261,13 +259,6 @@ export function PictographLesson() {
                </AnimatePresence>
            </div>
         </div>
-      )}
-
-    
-      {!quizDone && (
-         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
-            <DynamicQuiz topic="PictographLesson.tsx" onComplete={() => setQuizDone(true)} />
-         </div>
       )}
 </div>
   );

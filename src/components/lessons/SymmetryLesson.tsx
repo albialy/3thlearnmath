@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Scissors, Check, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -19,7 +18,6 @@ const SHAPES = [
 
 
 export function SymmetryLesson() {
-  const [quizDone, setQuizDone] = useState(false);
   const [selectedShape, setSelectedShape] = useState<typeof SHAPES[0] | null>(SHAPES[0]);
   const [activeLine, setActiveLine] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<'yes' | 'no' | null>(null);
@@ -110,12 +108,6 @@ export function SymmetryLesson() {
             قطري مائل (/)
          </button>
       </div>
-    
-      {!quizDone && (
-         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
-            <DynamicQuiz topic="SymmetryLesson.tsx" onComplete={() => setQuizDone(true)} />
-         </div>
-      )}
 </div>
   );
 }

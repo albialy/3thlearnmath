@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type Tab = 'home' | 'journey' | 'quiz' | 'tricks' | 'fact-family';
+export type Tab = 'home' | 'journey' | 'quiz' | 'tricks' | 'fact-family' | 'mixed-quiz';
 
 export interface Badge {
   id: string;
@@ -61,7 +61,7 @@ export const useAppStore = create<AppState>()(
         const newVisited = state.visitedTabs.includes(tab) ? state.visitedTabs : [...state.visitedTabs, tab];
         
         // Automatic badge earning for visiting all tabs
-        const allMainTabs: Tab[] = ['home', 'journey', 'quiz', 'tricks', 'fact-family'];
+        const allMainTabs: Tab[] = ['home', 'journey', 'quiz', 'tricks', 'fact-family', 'mixed-quiz'];
         const hasAllTabs = allMainTabs.every(t => newVisited.includes(t));
         
         // Check if we also need to add the explorer badge

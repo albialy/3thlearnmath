@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 
@@ -7,7 +6,6 @@ import confetti from 'canvas-confetti';
 
 
 export function DivideByTenLesson() {
-  const [quizDone, setQuizDone] = useState(false);
   const [step, setStep] = useState(0);
   const [practiceNum, setPracticeNum] = useState(50);
   const [ans, setAns] = useState('');
@@ -182,12 +180,6 @@ export function DivideByTenLesson() {
             )}
          </motion.div>
        )}
-    
-      {!quizDone && (
-         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
-            <DynamicQuiz topic="DivideByTenLesson.tsx" onComplete={() => setQuizDone(true)} />
-         </div>
-      )}
 </div>
   );
 }

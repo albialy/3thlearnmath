@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Star, RefreshCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -15,7 +14,6 @@ const CHALLENGES = [
 
 export function FractionsConceptLesson() {
   const [level, setLevel] = useState(0);
-  const [quizDone, setQuizDone] = useState(false);
   const [selectedParts, setSelectedParts] = useState<Set<number>>(new Set());
   const [showResult, setShowResult] = useState(false);
 
@@ -138,8 +136,6 @@ export function FractionsConceptLesson() {
               )}
             </AnimatePresence>
           </>
-        ) : !quizDone ? (
-          <DynamicQuiz topic="FractionsConceptLesson.tsx" onComplete={() => setQuizDone(true)} />
         ) : (
           <div className="flex flex-col items-center justify-center py-12">
             <div className="w-24 h-24 bg-teal-100 text-teal-500 rounded-full flex items-center justify-center mb-6">
@@ -148,7 +144,7 @@ export function FractionsConceptLesson() {
             <h3 className="text-3xl font-black text-slate-800 mb-4">عمل رائع!</h3>
             <p className="text-slate-600 text-lg mb-8">لقد أتقنت تمثيل الكسور كأجزاء من الكل.</p>
             <button 
-              onClick={() => { setLevel(0); setQuizDone(false); setSelectedParts(new Set()); setShowResult(false); }}
+              onClick={() => { setLevel(0); setSelectedParts(new Set()); setShowResult(false); }}
               className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-3 rounded-xl flex items-center gap-2"
             >
               <RefreshCw size={20} />

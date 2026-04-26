@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Lightbulb, Triangle, Home as HomeIcon, Palette, BookOpen, Heart, Trophy, Medal } from 'lucide-react';
+import { Play, Lightbulb, Triangle, Home as HomeIcon, Palette, BookOpen, Heart, Trophy, Medal, Target } from 'lucide-react';
 import { Home } from './components/Home';
 import { Quiz } from './components/Quiz';
 import { SmartTricks } from './components/SmartTricks';
 import { FactFamily } from './components/FactFamily';
 import { LearningJourney } from './components/LearningJourney';
+import { ComprehensiveQuiz } from './components/ComprehensiveQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAppStore, AVAILABLE_BADGES, Tab } from './store';
 
@@ -170,6 +171,13 @@ export default function App() {
             text="حيل"
             color="warning"
           />
+          <NavButton 
+            active={activeTab === 'mixed-quiz'} 
+            onClick={() => setActiveTab('mixed-quiz')}
+            icon={<Target size={18} />}
+            text="اختبار شامل"
+            color="primary"
+          />
         </nav>
       </header>
 
@@ -198,6 +206,11 @@ export default function App() {
           {activeTab === 'fact-family' && (
             <motion.div key="family" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="flex-1 flex flex-col">
               <FactFamily />
+            </motion.div>
+          )}
+          {activeTab === 'mixed-quiz' && (
+            <motion.div key="mixed-quiz" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="flex-1 flex flex-col">
+              <ComprehensiveQuiz />
             </motion.div>
           )}
         </AnimatePresence>
