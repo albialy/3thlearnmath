@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { SquareDashed, ArrowLeft, Check, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -16,7 +17,11 @@ const SHAPES = [
   { id: 'open2', name: 'خط منكسر', sides: 0, angles: 0, isPolygon: false, path: 'M10 50 L30 20 L50 80 L70 20 L90 50', strokeOnly: true },
 ];
 
+
+
+
 export function Shapes2DLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [mode, setMode] = useState<'learn' | 'sort'>('learn');
   const [selectedShape, setSelectedShape] = useState<typeof SHAPES[0] | null>(null);
 
@@ -160,6 +165,12 @@ export function Shapes2DLesson() {
       >
          لعبة التصنيف! مضلع أم لا؟
       </button>
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="Shapes2DLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

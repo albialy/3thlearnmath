@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Box, Check, RotateCcw, Variable } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -82,7 +83,11 @@ const DrawCube = ({ x, y, z, offsetY = 0 }: { x: number, y: number, z: number, o
   );
 }
 
+
+
+
 export function VolumeLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [currentLevelIdx, setCurrentLevelIdx] = useState(0);
   const [userVolume, setUserVolume] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -237,6 +242,12 @@ export function VolumeLesson() {
            </AnimatePresence>
         </div>
       </div>
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="VolumeLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

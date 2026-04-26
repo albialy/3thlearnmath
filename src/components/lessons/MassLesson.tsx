@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Scale, Check, AlertCircle, RefreshCw, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -9,7 +10,11 @@ const CHALLENGES = [
   { id: 3, item: 'أرنب لطيف', correctValue: '٢ كجم', wrongValue: '٢ جم', icon: '🐰', ai: 'الأرنب حيوان بوزن مناسب يمكنك حمله بين يديك، الكيلوجرام هو الوحدة المناسبة. (٢ جرام تعادل وزن ريشة الطائر!)' }
 ];
 
+
+
+
 export function MassLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -182,6 +187,12 @@ export function MassLesson() {
         )}
       </AnimatePresence>
       
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="MassLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

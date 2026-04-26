@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { SquareDashed, Check, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -27,7 +28,11 @@ const LEVELS = [
   }
 ];
 
+
+
+
 export function PerimeterLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [currentLevelIdx, setCurrentLevelIdx] = useState(0);
   const [interactiveStep, setInteractiveStep] = useState(0);
   const [userSum, setUserSum] = useState('');
@@ -304,6 +309,12 @@ export function PerimeterLesson() {
            )}
         </AnimatePresence>
       </div>
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="PerimeterLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

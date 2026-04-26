@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Grid3X3, Check, RotateCcw, Hand, Star } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -104,7 +105,11 @@ const LEVELS = [
   }
 ];
 
+
+
+
 export function AreaLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [currentLevelIdx, setCurrentLevelIdx] = useState(0);
   const level = LEVELS[currentLevelIdx];
 
@@ -355,6 +360,12 @@ export function AreaLesson() {
            </AnimatePresence>
         </div>
       </div>
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="AreaLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

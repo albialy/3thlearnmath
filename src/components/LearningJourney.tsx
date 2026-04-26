@@ -26,7 +26,13 @@ import { PictographLesson } from './lessons/PictographLesson';
 import { BarGraphLesson } from './lessons/BarGraphLesson';
 import { ProblemSolvingList } from './lessons/ProblemSolvingList';
 
-type LessonType = 'menu' | 'concept' | 'numberline' | 'arrays' | 'divide10' | 'zero_one' | 'tables' | 'unit_match' | 'perimeter' | 'area' | 'capacity' | 'mass' | 'volume' | 'time' | 'shapes3d' | 'shapes2d' | 'patterns' | 'symmetry' | 'probability' | 'pictograph' | 'bargraph' | 'problem_list';
+import { FractionsConceptLesson } from './lessons/FractionsConceptLesson';
+import { FractionsGroupLesson } from './lessons/FractionsGroupLesson';
+import { EquivalentFractionsLesson } from './lessons/EquivalentFractionsLesson';
+import { CompareFractionsLesson } from './lessons/CompareFractionsLesson';
+import { FractionsProblemSolvingLesson } from './lessons/FractionsProblemSolvingLesson';
+
+type LessonType = 'menu' | 'concept' | 'numberline' | 'arrays' | 'divide10' | 'zero_one' | 'tables' | 'unit_match' | 'perimeter' | 'area' | 'capacity' | 'mass' | 'volume' | 'time' | 'shapes3d' | 'shapes2d' | 'patterns' | 'symmetry' | 'probability' | 'pictograph' | 'bargraph' | 'problem_list' | 'fractions_concept' | 'fractions_group' | 'equivalent_fractions' | 'compare_fractions' | 'fractions_problems';
 
 export function LearningJourney() {
   const [currentLesson, setCurrentLesson] = useState<LessonType>('menu');
@@ -65,6 +71,11 @@ export function LearningJourney() {
            {currentLesson === 'bargraph' && <motion.div key="bg" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><BarGraphLesson /></motion.div>}
            {currentLesson === 'probability' && <motion.div key="pr" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><ProbabilityLesson /></motion.div>}
            {currentLesson === 'problem_list' && <motion.div key="pl" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><ProblemSolvingList /></motion.div>}
+           {currentLesson === 'fractions_concept' && <motion.div key="f_c" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><FractionsConceptLesson /></motion.div>}
+           {currentLesson === 'fractions_group' && <motion.div key="f_g" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><FractionsGroupLesson /></motion.div>}
+           {currentLesson === 'equivalent_fractions' && <motion.div key="f_eq" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><EquivalentFractionsLesson /></motion.div>}
+           {currentLesson === 'fractions_problems' && <motion.div key="f_prb" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><FractionsProblemSolvingLesson /></motion.div>}
+           {currentLesson === 'compare_fractions' && <motion.div key="f_cmp" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><CompareFractionsLesson /></motion.div>}
         </AnimatePresence>
       </div>
     );
@@ -288,6 +299,58 @@ export function LearningJourney() {
                </div>
                <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-amber-600">الاحتمالات والخطأ</h4>
                <p className="text-slate-500 text-xs font-medium mt-1">عبدالله أم أسماء؟</p>
+            </div>
+         </div>
+      </div>
+
+      {/* Chapter 11 */}
+      <div className="mb-8">
+         <div className="bg-indigo-50 border-r-8 border-indigo-500 p-6 rounded-l-3xl mb-6 shadow-sm">
+            <h3 className="text-3xl font-black text-indigo-800 flex items-center gap-3">
+               <span className="bg-indigo-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md">١١</span>
+               الكسور
+            </h3>
+         </div>
+         
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div onClick={() => setCurrentLesson('fractions_concept')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-teal-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Grid3X3 size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-teal-600">تمثيل الكسور</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">الكسور كأجزاء من الكل</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('fractions_group')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-rose-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Layers size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-rose-600">الكسور من مجموعة</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">أجزاء من مجموعة أشياء</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('equivalent_fractions')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-blue-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Scale size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600">الكسور المتكافئة</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">نفس القيمة، شكل مختلف</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('compare_fractions')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-purple-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <ArrowRight size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-purple-600">مقارنة وترتيب الكسور</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">أيهما أكبر؟</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('fractions_problems')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-amber-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <BookOpen size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-amber-600">خطة حل المسألة</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">رسم صورة للحل</p>
             </div>
          </div>
       </div>

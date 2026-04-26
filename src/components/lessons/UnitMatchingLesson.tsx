@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Ruler, CheckCircle2, AlertCircle, Bot, SlidersHorizontal } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -96,7 +97,11 @@ const getDynamicExample = (unit: string, value: number) => {
   return '';
 };
 
+
+
+
 export function UnitMatchingLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -291,6 +296,12 @@ export function UnitMatchingLesson() {
             )}
          </AnimatePresence>
       </div>
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="UnitMatchingLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

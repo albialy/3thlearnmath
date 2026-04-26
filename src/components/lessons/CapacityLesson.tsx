@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Droplet, Check, AlertCircle, RefreshCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -18,7 +19,11 @@ const ITEMS = [
   { id: 12, name: 'خزان مياه المنزل', icon: '🏢', unit: 'لتر', explanation: 'الخزان الضخم فوق سطح المنزل مليء بآلاف اللترات لنستخدمها في الاستحمام والطبخ كل يوم!' },
 ];
 
+
+
+
 export function CapacityLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [items, setItems] = useState(ITEMS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sorted, setSorted] = useState<{ ml: any[], l: any[] }>({ ml: [], l: [] });
@@ -226,6 +231,12 @@ export function CapacityLesson() {
            </button>
         </motion.div>
       )}
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="CapacityLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { Box, Cylinder, Circle, Triangle, Check, ArrowLeft, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -12,7 +13,11 @@ const SHAPES = [
   { id: 'sphere', name: 'كرة', faces: 0, edges: 0, vertices: 0, icon: '⚽', desc: 'ليس لها أوجه ولا أحرف ولا رؤوس.' },
 ];
 
+
+
+
 export function Shapes3DLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [mode, setMode] = useState<'learn' | 'challenge'>('learn');
   const [selectedShape, setSelectedShape] = useState<typeof SHAPES[0] | null>(null);
   
@@ -176,6 +181,12 @@ export function Shapes3DLesson() {
          <Check size={24} />
          اختبر معلوماتك!
       </button>
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="Shapes3DLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

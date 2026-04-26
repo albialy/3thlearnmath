@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { BarChart3, CheckCircle2, AlertCircle, Maximize2, Minimize2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -10,7 +11,11 @@ const SEASONS = [
   { id: 'autumn', name: 'الخريف', expected: 4, color: 'bg-orange-400' }
 ];
 
+
+
+
 export function BarGraphLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [mode, setMode] = useState<'intro' | 'build' | 'interpret'>('intro');
   
   // Build state
@@ -250,6 +255,12 @@ export function BarGraphLesson() {
         </div>
       )}
 
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="BarGraphLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

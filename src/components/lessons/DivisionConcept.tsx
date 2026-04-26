@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion } from 'motion/react';
 import confetti from 'canvas-confetti';
 
+
+
+
 export function DivisionConcept() {
+  const [quizDone, setQuizDone] = useState(false);
   const [total, setTotal] = useState(12);
   const [groups, setGroups] = useState(3);
   const [isDistributed, setIsDistributed] = useState(false);
@@ -123,6 +128,12 @@ export function DivisionConcept() {
            </button>
          </motion.div>
        )}
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="DivisionConcept.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

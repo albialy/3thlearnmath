@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { LayoutGrid, Check, RotateCcw, ArrowLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -62,7 +63,11 @@ const PATTERNS = [
   }
 ];
 
+
+
+
 export function PatternsLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [feedback, setFeedback] = useState<'yes' | 'no' | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -161,6 +166,12 @@ export function PatternsLesson() {
              )}
          </AnimatePresence>
       </div>
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="PatternsLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { DynamicQuiz } from '../DynamicQuiz';
 import { motion, AnimatePresence } from 'motion/react';
 import { HelpCircle, AlertCircle, CheckCircle2, RotateCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+
+
+
 export function ProbabilityLesson() {
+  const [quizDone, setQuizDone] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<'abdullah' | 'asmaa' | null>(null);
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
@@ -165,6 +170,12 @@ export function ProbabilityLesson() {
          )}
       </AnimatePresence>
 
-    </div>
+    
+      {!quizDone && (
+         <div className="mt-12 w-full flex justify-center z-50 relative pb-12 px-6">
+            <DynamicQuiz topic="ProbabilityLesson.tsx" onComplete={() => setQuizDone(true)} />
+         </div>
+      )}
+</div>
   );
 }
