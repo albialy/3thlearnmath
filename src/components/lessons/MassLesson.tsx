@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Scale, Check, AlertCircle, RefreshCw } from 'lucide-react';
+import { Scale, Check, AlertCircle, RefreshCw, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const CHALLENGES = [

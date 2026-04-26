@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
+
+const EMOJIS = ['🍎', '⭐', '🚗', '🎈', '🍪', '⚽', '🦋', '🍉'];
 
 export function ArrayLesson() {
   const [rows, setRows] = useState(3);
   const [cols, setCols] = useState(4);
+  const [currentEmoji, setCurrentEmoji] = useState(EMOJIS[0]);
   
   const [ansMult1, setAnsMult1] = useState('');
   const [ansMult2, setAnsMult2] = useState('');
@@ -36,6 +39,7 @@ export function ArrayLesson() {
   const handleNext = () => {
     setRows(Math.floor(Math.random() * 4) + 2); // 2 to 5
     setCols(Math.floor(Math.random() * 4) + 2);
+    setCurrentEmoji(EMOJIS[Math.floor(Math.random() * EMOJIS.length)]);
     setAnsMult1(''); setAnsMult2(''); setAnsMult3('');
     setAnsDiv1(''); setAnsDiv2(''); setAnsDiv3('');
     setIsCorrect(null);
@@ -52,20 +56,26 @@ export function ArrayLesson() {
          تأمل الشبكة التالية، ثم اكتب جملة ضرب وجملة قسمة مترابطتين (من الحقائق المترابطة) تعبران عنها.
        </p>
 
-       <div className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 flex flex-col items-center justify-center gap-3 mb-8 shadow-inner">
-          {Array.from({ length: rows }).map((_, r) => (
-             <div key={r} className="flex gap-3">
-               {Array.from({ length: cols }).map((_, c) => (
-                 <motion.div 
-                   key={`${r}-${c}`}
-                   initial={{ scale: 0 }}
-                   animate={{ scale: 1 }}
-                   transition={{ delay: (r * cols + c) * 0.05 }}
-                   className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-500 shadow-md border-2 border-emerald-600"
-                 />
-               ))}
-             </div>
-          ))}
+       <div className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 flex flex-col items-center justify-center gap-3 mb-8 shadow-inner overflow-hidden">
+          <AnimatePresence mode="popLayout">
+            <motion.div key={`${rows}-${cols}-${currentEmoji}`} initial={{opacity:0, scale:0.8}} animate={{opacity:1, scale:1}} exit={{opacity:0, scale:0.8}} className="flex flex-col gap-3">
+              {Array.from({ length: rows }).map((_, r) => (
+                <div key={r} className="flex gap-3 justify-center">
+                  {Array.from({ length: cols }).map((_, c) => (
+                    <motion.div 
+                      key={`${r}-${c}`}
+                      initial={{ scale: 0, rotate: -30 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: (r * cols + c) * 0.05, type: 'spring' }}
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white shadow-sm border-2 border-slate-200 flex items-center justify-center text-3xl md:text-4xl hover:scale-110 transition-transform cursor-default"
+                    >
+                      {currentEmoji}
+                    </motion.div>
+                  ))}
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
           <div className="mt-4 text-slate-500 font-bold bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
              (شبكة من {rows} صفوف و {cols} أعمدة)
           </div>

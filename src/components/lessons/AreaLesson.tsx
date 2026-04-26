@@ -75,6 +75,32 @@ const LEVELS = [
       [false, false, true, true, false, false],
       [false, false, true, true, false, false]
     ] // Plus Shape
+  },
+  {
+    id: 7,
+    rows: 6,
+    cols: 5,
+    mask: [
+      [false, false, true, false, false],
+      [false, true, true, true, false],
+      [true, true, true, true, true],
+      [true, true, true, true, true],
+      [true, true, true, true, true],
+      [true, true, true, true, true]
+    ] // House Shape
+  },
+  {
+    id: 8,
+    rows: 6,
+    cols: 7,
+    mask: [
+      [false, false, true, false, true, false, false],
+      [false, true, true, true, true, true, false],
+      [true, true, false, true, false, true, true],
+      [true, true, true, true, true, true, true],
+      [true, false, true, true, true, false, true],
+      [true, false, false, false, false, false, true]
+    ] // Space Invader
   }
 ];
 

@@ -182,11 +182,12 @@ export function VolumeLesson() {
             <svg viewBox="-150 -100 300 300" className="w-full h-full drop-shadow-xl overflow-visible">
               <g transform="translate(0, 100)">
                  {blocks.map((b, i) => (
-                    <DrawCube 
-                       key={`${currentLevelIdx}-${b.x}-${b.y}-${b.z}`} 
-                       x={b.x} y={b.y} z={b.z} 
-                       offsetY={showLayers ? b.z * 50 : 0} 
-                    />
+                    <g key={`${currentLevelIdx}-${b.x}-${b.y}-${b.z}`}>
+                       <DrawCube 
+                          x={b.x} y={b.y} z={b.z} 
+                          offsetY={showLayers ? b.z * 50 : 0} 
+                       />
+                    </g>
                  ))}
               </g>
             </svg>

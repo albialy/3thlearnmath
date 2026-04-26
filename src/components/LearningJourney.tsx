@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, BookOpen, Layers, GitCommit, LayoutGrid, Scissors, Sparkles, Table2, Ruler, SquareDashed, Grid3X3, Droplet, Scale, Box, Clock } from 'lucide-react';
+import { ArrowRight, BookOpen, Layers, GitCommit, LayoutGrid, Scissors, Sparkles, Table2, Ruler, SquareDashed, Grid3X3, Droplet, Scale, Box, Clock, Smile, BarChart3 } from 'lucide-react';
 
 import { DivisionConcept } from './lessons/DivisionConcept';
 import { NumberLine } from './lessons/NumberLine';
@@ -17,7 +17,16 @@ import { MassLesson } from './lessons/MassLesson';
 import { VolumeLesson } from './lessons/VolumeLesson';
 import { TimeLesson } from './lessons/TimeLesson';
 
-type LessonType = 'menu' | 'concept' | 'numberline' | 'arrays' | 'divide10' | 'zero_one' | 'tables' | 'unit_match' | 'perimeter' | 'area' | 'capacity' | 'mass' | 'volume' | 'time';
+import { Shapes3DLesson } from './lessons/Shapes3DLesson';
+import { Shapes2DLesson } from './lessons/Shapes2DLesson';
+import { PatternsLesson } from './lessons/PatternsLesson';
+import { SymmetryLesson } from './lessons/SymmetryLesson';
+import { ProbabilityLesson } from './lessons/ProbabilityLesson';
+import { PictographLesson } from './lessons/PictographLesson';
+import { BarGraphLesson } from './lessons/BarGraphLesson';
+import { ProblemSolvingList } from './lessons/ProblemSolvingList';
+
+type LessonType = 'menu' | 'concept' | 'numberline' | 'arrays' | 'divide10' | 'zero_one' | 'tables' | 'unit_match' | 'perimeter' | 'area' | 'capacity' | 'mass' | 'volume' | 'time' | 'shapes3d' | 'shapes2d' | 'patterns' | 'symmetry' | 'probability' | 'pictograph' | 'bargraph' | 'problem_list';
 
 export function LearningJourney() {
   const [currentLesson, setCurrentLesson] = useState<LessonType>('menu');
@@ -47,6 +56,15 @@ export function LearningJourney() {
            {currentLesson === 'mass' && <motion.div key="ms" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><MassLesson /></motion.div>}
            {currentLesson === 'volume' && <motion.div key="vl" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><VolumeLesson /></motion.div>}
            {currentLesson === 'time' && <motion.div key="tm" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><TimeLesson /></motion.div>}
+           
+           {currentLesson === 'shapes3d' && <motion.div key="s3" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><Shapes3DLesson /></motion.div>}
+           {currentLesson === 'shapes2d' && <motion.div key="s2" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><Shapes2DLesson /></motion.div>}
+           {currentLesson === 'patterns' && <motion.div key="pt" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><PatternsLesson /></motion.div>}
+           {currentLesson === 'symmetry' && <motion.div key="sy" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><SymmetryLesson /></motion.div>}
+           {currentLesson === 'pictograph' && <motion.div key="pg" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><PictographLesson /></motion.div>}
+           {currentLesson === 'bargraph' && <motion.div key="bg" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><BarGraphLesson /></motion.div>}
+           {currentLesson === 'probability' && <motion.div key="pr" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><ProbabilityLesson /></motion.div>}
+           {currentLesson === 'problem_list' && <motion.div key="pl" initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}><ProblemSolvingList /></motion.div>}
         </AnimatePresence>
       </div>
     );
@@ -186,7 +204,94 @@ export function LearningJourney() {
             </div>
          </div>
       </div>
+      {/* Chapter 3 */}
+      <div className="mb-8">
+         <div className="bg-rose-50 border-r-8 border-rose-500 p-6 rounded-l-3xl mb-6 shadow-sm">
+            <h3 className="text-3xl font-black text-rose-800 flex items-center gap-3">
+               <span className="bg-rose-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md">٣</span>
+               الأشكال الهندسية
+            </h3>
+         </div>
+         
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div onClick={() => setCurrentLesson('shapes3d')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-rose-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Box size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-rose-600">المجسمات</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">الأشكال ثلاثية الأبعاد</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('shapes2d')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-pink-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <SquareDashed size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-pink-600">الأشكال المستوية</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">المضلعات ثنائية الأبعاد</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('symmetry')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-purple-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Scissors size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-purple-600">التماثل</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">طية الورق السحرية</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('patterns')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-fuchsia-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-fuchsia-100 text-fuchsia-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <LayoutGrid size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-fuchsia-600">الأنماط الهندسية</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">أكمل السلسلة!</p>
+            </div>
+         </div>
+      </div>
       
+      {/* Chapter 10 */}
+      <div className="mb-8">
+         <div className="bg-amber-50 border-r-8 border-amber-500 p-6 rounded-l-3xl mb-6 shadow-sm">
+            <h3 className="text-3xl font-black text-amber-800 flex items-center gap-3">
+               <span className="bg-amber-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-md">١٠</span>
+               عرض البيانات وتفسيرها
+            </h3>
+         </div>
+         
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div onClick={() => setCurrentLesson('pictograph')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-indigo-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Smile size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600">التمثيل بالرموز</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">قراءة الرموز وفهمها</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('bargraph')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-cyan-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <BarChart3 size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600">التمثيل بالأعمدة</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">بناء وقراءة الأعمدة</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('problem_list')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-fuchsia-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-fuchsia-100 text-fuchsia-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <LayoutGrid size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-fuchsia-600">إنشاء قائمة</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">خطة حل المسألة</p>
+            </div>
+
+            <div onClick={() => setCurrentLesson('probability')} className="bg-white rounded-3xl p-6 border-2 border-slate-100 hover:border-amber-400 shadow-sm hover:shadow-lg transition-all cursor-pointer group flex flex-col items-center text-center">
+               <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Sparkles size={28} />
+               </div>
+               <h4 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-amber-600">الاحتمالات والخطأ</h4>
+               <p className="text-slate-500 text-xs font-medium mt-1">عبدالله أم أسماء؟</p>
+            </div>
+         </div>
+      </div>
+
     </div>
   );
 }
