@@ -177,30 +177,36 @@ export function TimeLesson() {
             
             <div className="mt-6 flex flex-col items-center">
                <h4 className="text-teal-800 font-bold mb-2">الساعة الرقمية:</h4>
-               <div className="flex items-center gap-3 bg-slate-800 p-4 rounded-2xl border-4 border-slate-700 shadow-xl relative overflow-hidden">
+               <div className="flex items-center gap-4 bg-slate-800 px-6 pb-4 pt-8 rounded-2xl border-4 border-slate-700 shadow-xl relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
                   
                   {/* Hours */}
-                  <input 
-                     type="number" 
-                     value={userH}
-                     onChange={handleInput(setUserH)}
-                     min="1" max="12"
-                     className="w-16 h-16 bg-slate-900 text-teal-400 font-mono text-4xl text-center rounded-xl border border-slate-600 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/50 outline-none transition-colors"
-                     placeholder="٠٠"
-                     dir="ltr"
-                  />
-                  <span className="text-teal-500 font-black text-3xl animate-pulse">:</span>
+                  <div className="flex flex-col items-center relative z-10 font-sans">
+                    <span className="text-teal-300 text-xs font-black absolute -top-6 bg-slate-800/80 px-2 rounded-full border border-slate-600 shadow-sm">الساعات</span>
+                    <input 
+                       type="number" 
+                       value={userH}
+                       onChange={handleInput(setUserH)}
+                       min="1" max="12"
+                       className="w-16 h-16 bg-slate-900 text-teal-400 font-mono text-3xl font-bold text-center rounded-xl border-2 border-slate-600 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/50 outline-none transition-colors shadow-inner"
+                       placeholder="٠٠"
+                       dir="ltr"
+                    />
+                  </div>
+                  <span className="text-teal-500 font-black text-3xl animate-pulse relative z-10 -mt-2">:</span>
                   {/* Minutes */}
-                  <input 
-                     type="number" 
-                     value={userM}
-                     onChange={handleInput(setUserM)}
-                     min="0" max="59"
-                     className="w-16 h-16 bg-slate-900 text-teal-400 font-mono text-4xl text-center rounded-xl border border-slate-600 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/50 outline-none transition-colors"
-                     placeholder="٠٠"
-                     dir="ltr"
-                  />
+                  <div className="flex flex-col items-center relative z-10 font-sans">
+                    <span className="text-teal-300 text-xs font-black absolute -top-6 bg-slate-800/80 px-2 rounded-full border border-slate-600 shadow-sm">الدقائق</span>
+                    <input 
+                       type="number" 
+                       value={userM}
+                       onChange={handleInput(setUserM)}
+                       min="0" max="59"
+                       className="w-16 h-16 bg-slate-900 text-teal-400 font-mono text-3xl font-bold text-center rounded-xl border-2 border-slate-600 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/50 outline-none transition-colors shadow-inner"
+                       placeholder="٠٠"
+                       dir="ltr"
+                    />
+                  </div>
                </div>
             </div>
          </div>

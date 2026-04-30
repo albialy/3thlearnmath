@@ -1,5 +1,7 @@
 import { QuizQuestion } from '../components/ComprehensiveQuiz';
 
+const usedQuestions = new Set<string>();
+
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const shuffleOptions = (correct: string, w1: string, w2: string, w3: string) => {
@@ -26,10 +28,16 @@ export function generateMixedQuiz(): QuizQuestion[] {
     'BasicMath'
   ];
   
-  // Pick 10 random topics
-  for (let i = 0; i < 10; i++) {
+  let attempts = 0;
+  
+  while (result.length < 10 && attempts < 1000) {
+    attempts++;
     const topic = topics[randomInt(0, topics.length - 1)];
     const qType = Math.random();
+    
+    let questionText = "";
+    let finalOptions: string[] = [];
+    let finalCorrectAnswer = -1;
     
     if (topic === 'FractionsConcept') {
       const denom = randomInt(3, 10);
@@ -38,18 +46,14 @@ export function generateMixedQuiz(): QuizQuestion[] {
         const { options, correctAnswer } = shuffleOptions(
           `الأجزاء الملونة`, `العدد الكلي للأجزاء`, `نصف الشكل`, `لا شيء مما سبق`
         );
-        result.push({
-          question: `في الكسر ${num}/${denom}، ماذا يمثل العدد ${num}؟`,
-          options, correctAnswer
-        });
+        questionText = `في الكسر ${num}/${denom}، ماذا يمثل العدد ${num}؟`;
+        finalOptions = options; finalCorrectAnswer = correctAnswer;
       } else {
         const { options, correctAnswer } = shuffleOptions(
           `${num}/${denom}`, `${denom}/${num}`, `${num + 1}/${denom}`, `${num}/${denom + 1}`
         );
-        result.push({
-          question: `أي كسر يمثل ${num} أجزاء من ${denom} أجزاء متساوية؟`,
-          options, correctAnswer
-        });
+        questionText = `أي كسر يمثل ${num} أجزاء من ${denom} أجزاء متساوية؟`;
+        finalOptions = options; finalCorrectAnswer = correctAnswer;
       }
     } else if (topic === 'FractionsGroup') {
       const total = randomInt(5, 12);
@@ -59,10 +63,8 @@ export function generateMixedQuiz(): QuizQuestion[] {
       const { options, correctAnswer } = shuffleOptions(
         `${target}/${total}`, `${total}/${target}`, `${target}/${total + 1}`, `${target + 1}/${total}`
       );
-      result.push({
-        question: `إذا كان لديك ${total} كرات، منها ${target} كرات ${targetColor}، ما الكسر الذي يمثل الكرات ال${targetColor}؟`,
-        options, correctAnswer
-      });
+      questionText = `إذا كان لديك ${total} كرات، منها ${target} كرات ${targetColor}، ما الكسر الذي يمثل الكرات ال${targetColor}؟`;
+      finalOptions = options; finalCorrectAnswer = correctAnswer;
     } else if (topic === 'EquivalentFractions') {
       const num = randomInt(1, 4);
       const denom = randomInt(num + 1, 6);
@@ -70,10 +72,8 @@ export function generateMixedQuiz(): QuizQuestion[] {
       const { options, correctAnswer } = shuffleOptions(
         `${num * mult}/${denom * mult}`, `${num + 1}/${denom + 1}`, `${num * mult}/${denom}`, `${num}/${denom * mult}`
       );
-      result.push({
-        question: `أي كسر مما يلي يكافئ الكسر ${num}/${denom}؟`,
-        options, correctAnswer
-      });
+      questionText = `أي كسر مما يلي يكافئ الكسر ${num}/${denom}؟`;
+      finalOptions = options; finalCorrectAnswer = correctAnswer;
     } else if (topic === 'CompareFractions') {
       const denom = randomInt(5, 10);
       const num1 = randomInt(1, denom - 2);
@@ -81,10 +81,8 @@ export function generateMixedQuiz(): QuizQuestion[] {
       const { options, correctAnswer } = shuffleOptions(
         `${num2}/${denom}`, `${num1}/${denom}`, `متساويان`, `لا يمكن المعرفة`
       );
-      result.push({
-        question: `أي الكسرين أكبر: ${num1}/${denom} أم ${num2}/${denom}؟`,
-        options, correctAnswer
-      });
+      questionText = `أي الكسرين أكبر: ${num1}/${denom} أم ${num2}/${denom}؟`;
+      finalOptions = options; finalCorrectAnswer = correctAnswer;
     } else if (topic === 'Division') {
       const a = randomInt(2, 10);
       const b = randomInt(2, 10);
@@ -92,49 +90,39 @@ export function generateMixedQuiz(): QuizQuestion[] {
       const { options, correctAnswer } = shuffleOptions(
         `${a}`, `${a + 1}`, `${a - 1}`, `${b + 1}`
       );
-      result.push({
-        question: `ما هو ناتج قسمة ${prod} ÷ ${b}؟`,
-        options, correctAnswer
-      });
+      questionText = `ما هو ناتج قسمة ${prod} ÷ ${b}؟`;
+      finalOptions = options; finalCorrectAnswer = correctAnswer;
     } else if (topic === 'Area') {
       const l = randomInt(3, 10);
       const w = randomInt(2, 8);
       const { options, correctAnswer } = shuffleOptions(
         `${l * w}`, `${l + w}`, `${(l + w) * 2}`, `${l * w + 1}`
       );
-      result.push({
-        question: `مستطيل طوله ${l} وعرضه ${w}، ما هي مساحته؟`,
-        options, correctAnswer
-      });
+      questionText = `مستطيل طوله ${l} وعرضه ${w}، ما هي مساحته؟`;
+      finalOptions = options; finalCorrectAnswer = correctAnswer;
     } else if (topic === 'Perimeter') {
       const l = randomInt(3, 10);
       const w = randomInt(2, 8);
       const { options, correctAnswer } = shuffleOptions(
         `${(l + w) * 2}`, `${l * w}`, `${l + w}`, `${(l + w) * 2 + 2}`
       );
-      result.push({
-        question: `مستطيل طوله ${l} وعرضه ${w}، ما هو محيطه؟`,
-        options, correctAnswer
-      });
+      questionText = `مستطيل طوله ${l} وعرضه ${w}، ما هو محيطه؟`;
+      finalOptions = options; finalCorrectAnswer = correctAnswer;
     } else if (topic === 'Time') {
       if (qType > 0.5) {
         const hours = randomInt(2, 5);
         const { options, correctAnswer } = shuffleOptions(
           `${hours * 60}`, `${hours * 24}`, `${hours * 3600}`, `${hours * 100}`
         );
-        result.push({
-          question: `كم دقيقة في ${hours} ساعات؟`,
-          options, correctAnswer
-        });
+        questionText = `كم دقيقة في ${hours} ساعات؟`;
+        finalOptions = options; finalCorrectAnswer = correctAnswer;
       } else {
         const weeks = randomInt(2, 5);
         const { options, correctAnswer } = shuffleOptions(
           `${weeks * 7}`, `${weeks * 30}`, `${weeks * 12}`, `${weeks * 24}`
         );
-        result.push({
-          question: `كم يوماً في ${weeks} أسابيع؟`,
-          options, correctAnswer
-        });
+        questionText = `كم يوماً في ${weeks} أسابيع؟`;
+        finalOptions = options; finalCorrectAnswer = correctAnswer;
       }
     } else if (topic === 'Patterns') {
       const start = randomInt(2, 15);
@@ -146,10 +134,8 @@ export function generateMixedQuiz(): QuizQuestion[] {
       const { options, correctAnswer } = shuffleOptions(
         `${num4}`, `${num4 + 1}`, `${num4 - 1}`, `${num4 + step}`
       );
-      result.push({
-        question: `ما هو العدد التالي في النمط: ${num1}، ${num2}، ${num3}، ...؟`,
-        options, correctAnswer
-      });
+      questionText = `ما هو العدد التالي في النمط: ${num1}، ${num2}، ${num3}، ...؟`;
+      finalOptions = options; finalCorrectAnswer = correctAnswer;
     } else {
       // BasicMath
       const type = randomInt(1, 3);
@@ -157,18 +143,43 @@ export function generateMixedQuiz(): QuizQuestion[] {
         const a = randomInt(10, 50);
         const b = randomInt(10, 50);
         const { options, correctAnswer } = shuffleOptions(`${a + b}`, `${a + b + 10}`, `${a + b - 5}`, `${Math.max(a,b)}`);
-        result.push({ question: `ما هو ناتج جمع ${a} + ${b}؟`, options, correctAnswer });
+        questionText = `ما هو ناتج جمع ${a} + ${b}؟`;
+        finalOptions = options; finalCorrectAnswer = correctAnswer;
       } else if (type === 2) {
         const a = randomInt(5, 12);
         const b = randomInt(2, 9);
         const { options, correctAnswer } = shuffleOptions(`${a * b}`, `${a * b + 2}`, `${a * b - 3}`, `${a + b}`);
-        result.push({ question: `ما هو حاصل ضرب ${a} × ${b}؟`, options, correctAnswer });
+        questionText = `ما هو حاصل ضرب ${a} × ${b}؟`;
+        finalOptions = options; finalCorrectAnswer = correctAnswer;
       } else {
         const a = randomInt(20, 90);
         const b = randomInt(10, a - 5);
         const { options, correctAnswer } = shuffleOptions(`${a - b}`, `${a - b + 5}`, `${a - b - 5}`, `${a}`);
-        result.push({ question: `ما هو ناتج طرح ${a} - ${b}؟`, options, correctAnswer });
+        questionText = `ما هو ناتج طرح ${a} - ${b}؟`;
+        finalOptions = options; finalCorrectAnswer = correctAnswer;
       }
+    }
+    
+    if (!usedQuestions.has(questionText)) {
+      usedQuestions.add(questionText);
+      result.push({
+        question: questionText,
+        options: finalOptions,
+        correctAnswer: finalCorrectAnswer
+      });
+    }
+  }
+  
+  if (result.length < 10) {
+    // If we exhausted questions, clear history and allow them again for what's missing
+    usedQuestions.clear();
+    const needed = 10 - result.length;
+    for (let i = 0; i < needed; i++) {
+        // Just fill the rest without uniqueness check to guarantee 10 questions
+        const a = randomInt(10, 50);
+        const b = randomInt(10, 50);
+        const { options, correctAnswer } = shuffleOptions(`${a + b}`, `${a + b + 10}`, `${a + b - 5}`, `${Math.max(a,b)}`);
+        result.push({ question: `ما هو ناتج جمع ${a} + ${b}؟`, options, correctAnswer });
     }
   }
   
